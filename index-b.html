@@ -17,8 +17,12 @@
   <script src="ArenaRender/addons/p5.sound.min.js"></script>
   <script src="ArenaRender/empty-example/sketch.js" width="50" height="50"></script>
 
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> <!-- cdn css bootstrap-->
   <!-- Page level plugin CSS-->
+
+  <!-- Graph -->
   <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
@@ -104,6 +108,7 @@
           <div class="card-body">
             <canvas id="myAreaChart" width="100%" height="600"></canvas>
               <div id="quadrants"><!--Modified to add quadrants to card-body-->
+             <!-- container top left/Buttons -->
                 <div id="box" class="top left">                	
                   <p align="center" style="outline-style: solid;">Interface</p>                  
                   <div id="Slides" class="container">
@@ -126,14 +131,19 @@
                  </div>
             	</div>
                 <!--/.container top left/Buttons-->
+                 <!-- container top right/Simulation -->
                 <div id="box" class="top right">
                   <p align="center" style="outline-style: solid;">Simulation</p>
+                  <script src="sketch.js"></script>
                 </div>
-                <!--/.container top right/Simulation-->                
+                 <!--/.container top right/Simulation -->
+                <!--/.container bottom left/Graph-->                 
                 <div id="box" class="bottom left">
-                  <p align="center" style="outline-style: solid;">Graph</p>                  
+                  <p align="center" style="outline-style: solid;">Graph</p>
+				  <canvas id="ppvChart" width="3"></canvas>
                 </div>
                 <!--/.container bottom left/Graph-->
+                <!-- container bottom right/Data -->
                 <div id="box" class="bottom right">
                   <p align="center" style="outline-style: solid;">Graph Result </p>
                   <p id="preyP" style="margin-left: 10px;" script="">Prey Population:</p>
@@ -161,6 +171,8 @@
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+  <!--RT-Graph -->
+  <script type="text/javascript" src="graph_index.js"></script>
   <!--script for RT-Data-->
   <script>document.getElementById("preyP").innerHTML = "Prey Population: "+prey;</script>
   <script>document.getElementById("predP").innerHTML = "Predator Population: "+predator;</script>
