@@ -24,6 +24,11 @@
   <link href="css/sb-admin.css" rel="stylesheet">
 
 </head>
+<script>
+	var prey=0;
+	var predator=0;
+	var vegetation=0;
+</script>
 <style>
 #ex1Slider .slider-selection {
 	background: #BABABA;
@@ -120,19 +125,22 @@
                   <p>More buttons here!</p>     
                  </div>
             	</div>
-                <!--/.container top left-->
+                <!--/.container top left/Buttons-->
                 <div id="box" class="top right">
                   <p align="center" style="outline-style: solid;">Simulation</p>
                 </div>
-                <!--/.container top right-->                
+                <!--/.container top right/Simulation-->                
                 <div id="box" class="bottom left">
                   <p align="center" style="outline-style: solid;">Graph</p>                  
                 </div>
-                <!--/.container bottom left-->
+                <!--/.container bottom left/Graph-->
                 <div id="box" class="bottom right">
-                  <p align="center" style="outline-style: solid;">Graph Result</p>                  
+                  <p align="center" style="outline-style: solid;">Graph Result </p>
+                  <p id="preyP" style="margin-left: 10px;" script="">Prey Population:</p>
+                  <p id="predP" style="margin-left: 10px;">Predator Population:</p>
+                  <p id="vegP" style="margin-left: 10px;">Vegetation Population:</p>
                 </div>
-                <!--/.container bottom right-->
+                <!--/.container bottom right/Data-->
               </div>
               <!-- /.quadrants -->
           </div>
@@ -152,6 +160,11 @@
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!--script for RT-Data-->
+  <script>document.getElementById("preyP").innerHTML = "Prey Population: "+prey;</script>
+  <script>document.getElementById("predP").innerHTML = "Predator Population: "+predator;</script>
+  <script>document.getElementById("vegP").innerHTML = "Vegatation Population: "+vegetation;</script>
 
   <!-- Core plugin JavaScript-->
   <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
