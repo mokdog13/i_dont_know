@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!--
+	<style>
+
+	.container{
+		display: flex;
+	}
+
+	.pc{
+		flex: 3;
+		text-align: center;
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
+
+	.pyc{
+		flex: 3;
+		text-align: center;
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
+
+	.vc{
+		flex: 3;
+		text-align: center;
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
+
+	</style> -->
+
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> <!-- cdn css bootstrap-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
+
+</head>
+<body>
+
+	<div id="chartContainer" class ="container">
+		
+<!--
+
+		<div id="predator" >
+				<canvas id="predatorChart" class="pc"> </canvas>
+		</div>
+
+
+		<div id="prey" >
+				<canvas id="preyChart" class="pyc"> </canvas>
+		</div>
+
+
+
+		<div id="vegetation" >
+				<canvas id="vegetationChart" class="vc"> </canvas>
+		</div>
+
+	-->
+
+		<div id="ppv">
+			<canvas id="ppvChart"></canvas>
+		</div>
+
+
+
+	</div>
+
+	<div id ="textAnalysis" class ="container">
+
+		<canvas id="textbox"> Real-time Results </canvas>
+
+	</div>
+
+	<script type="text/javascript" src="graph_index.js"></script>
+	<script type="text/javascript" src="sketch.js"></script>
+
+
+</body>
+</html>
