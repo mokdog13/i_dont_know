@@ -1,0 +1,3 @@
+var prey = {"name":"Deer", "speed": 40, "birthrate": 5, "deathrate": 3};
+var pred = {"name":"Cougar", "speed": 60, "birthrate": 3, "deathrate": 5};
+var veg = {"name":"Grass", "speed": 0, "birthrate": 6, "deathrate": 4};  //presets

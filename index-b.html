@@ -12,10 +12,17 @@
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <script src="button.js"></script>
+
+  <!-- Attributes -->
+  <script type="text/javascript" src="attribute.js"></script>
+  <script type="text/javascript" src="attribute.json"></script>
+
+
+  <!--Simulation-->
   <script src="ArenaRender/p5.min.js"></script>
   <script src="ArenaRender/addons/p5.dom.min.js"></script>
   <script src="ArenaRender/addons/p5.sound.min.js"></script>
-  <script src="ArenaRender/empty-example/sketch.js" width="50" height="50"></script>
+  <script src="ArenaRender/empty-example/sketch.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> <!-- cdn css bootstrap-->
   <!-- Page level plugin CSS-->
@@ -28,11 +35,6 @@
   <link href="css/sb-admin.css" rel="stylesheet">
 
 </head>
-<script>
-	var prey=0;
-	var predator=0;
-	var vegetation=0;
-</script>
 <style>
 #ex1Slider .slider-selection {
 	background: #BABABA;
@@ -41,9 +43,10 @@
   position: absolute;
   width: 49.8%;
   height: 46.3%;
+
 }
 #box{
-  outline-style: dashed;
+  outline-style: solid;
 }
 .top {
   top: 0;
@@ -60,9 +63,50 @@
   left: 0;
   margin-left:  1px;
 }
+
+.dropbtn {
+  background-color: #4CAF50;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 10px;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.dropdown-content a {
+  color: black;
+  background-color: #3e8e41;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+	background-color: yellow;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: #3e8e41;
+}
+
 </style>
 
-<body id="page-top">
+<body id="page-top" style="background-color: lightgreen;">
 
   <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
     <a class="navbar-brand mr-1"></a>
@@ -100,7 +144,7 @@
     <div id="content-wrapper">
       <div class="container-fluid">
         <!-- Area Chart Example-->
-        <div class="card mb-3" style="outline-style: solid;">
+        <div class="card mb-3" style="outline-style: solid;background-color: light;">
           <div class="card-header" align="center"style="outline-style: solid;">
             <i class="fas fa-chart-area"></i>
             <h id="title" style="font-size: 15px;"><strong>Predator & Predation Simulator</strong></h>
@@ -109,48 +153,80 @@
             <canvas id="myAreaChart" width="100%" height="600"></canvas>
               <div id="quadrants"><!--Modified to add quadrants to card-body-->
              <!-- container top left/Buttons -->
-                <div id="box" class="top left">                	
-                  <p align="center" style="outline-style: solid;">Interface</p>                  
-                  <div id="Slides" class="container">
-                  	<p style="font-size: 13px;"><strong>Prey</strong></p>
-	                <input type="range" name="rangeInput" min="0" max="100" onchange="updateTextInput1(this.value);">
+                <div id="box" class="top left">   
+				<div class="dropdown">
+				  <button id="drop" class="dropbtn">Menu</button> <!-- could be ctrl tab instead -->
+				  <div class="dropdown-content">
+				  <a id="Dmenu" onclick="Fmenu()">Ready?</a>
+				  <a id="Dprey" onclick="Fprey()">Prey</a>
+				  <a id="Dpred" onclick="Fpred()">Predator</a>
+				  <a id="Dveg" onclick="Fveg()">Vegetation</a>
+				  </div>
+				</div>
+                  <p id="menuname" align="center" style="outline-style: solid;">Interface</p>                  
+                  <div id="Stuff1" class="container" style="display: none;">
+                  	<p style="font-size: 13px;"><strong>Speed</strong></p>
+	                <input type="range" name="rangeInput" min="0" max="100" oninput="updateTextInput1(this.value);">
 	                <input type="text" id="textInput1" value="">
-                  	<p style="font-size: 13px;"><strong>Predator</strong></p>
-	                <input type="range" name="rangeInput" min="0" max="100" onchange="updateTextInput2(this.value);">
+                  	<p style="font-size: 13px;"><strong>Birthrate</strong></p>
+	                <input type="range" name="rangeInput" min="0" max="100" oninput="updateTextInput2(this.value);">
 	                <input type="text" id="textInput2" value="">
-                  	<p style="font-size: 13px;"><strong>Vegetation</strong></p>
-	                <input type="range" name="rangeInput" min="0" max="100" onchange="updateTextInput3(this.value);">
+                  	<p style="font-size: 13px;"><strong>DeathRate</strong></p>
+	                <input type="range" name="rangeInput" min="0" max="100" oninput="updateTextInput3(this.value);">
 	                <input type="text" id="textInput3" value="">
-                  	<p style="font-size: 13px;"><strong>Our Grade</strong></p>
-	                <input type="range" name="rangeInput" min="0" max="100" onchange="updateTextInput4(this.value);">
-	                <input type="text" id="textInput4" value="">
+                    <button id="toggle" style="display: block;margin-top: 5%;" onclick="nothin()">Save</button>	                
+	               </div>
+	               <!--/.Stuff1-->
+	              <div id="Stuff2" class="container">
+                  	<p style="font-size: 13px;"><strong>Time</strong></p>
+	                <input type="range" name="rangeInput" min="0" max="100" oninput="updateTextInput4(this.value);">
+	                <input type="text" id="textInput4" value="" style="display: block;">
+                    <button id="toggle" style="display: block;margin-top: 20%;" onclick="nothin()">Run</button>
+                  <div id="stats1" class="right" style="display: block; margin-top:-48.5%;">
+                  <p id="stats1a"></p>     
+                  <p id="stats1b"></p>
+                  <p id="stats1c"></p>
+                  <p id="stats1d"></p>
+                    </div>
                  </div>
-                 <!--/.Slides-->   
-                 <div id="buttons"class="container right">
-                  <p>More buttons here!</p>     
+                 <!--/.Stuff2-->   
+                 <div id="stats2" class="container" style="margin-left: 50%;">	 <!-- Where configured stats will be displayed-->
+                  <p id="stats2a"></p>     
+                  <p id="stats2b"></p>
+                  <p id="stats2c"></p>
+                  <p id="stats2d"></p>
                  </div>
+                 <div id="stats3" class="container" style="margin-left: 78%;">
+                  <p id="stats3a"></p>     
+                  <p id="stats3b"></p>
+                  <p id="stats3c"></p>
+                  <p id="stats3d"></p>
+                 </div>                 
             	</div>
                 <!--/.container top left/Buttons-->
+
                  <!-- container top right/Simulation -->
                 <div id="box" class="top right">
                   <p align="center" style="outline-style: solid;">Simulation</p>
-                  <script src="sketch.js"></script>
                 </div>
                  <!--/.container top right/Simulation -->
+
                 <!--/.container bottom left/Graph-->                 
                 <div id="box" class="bottom left">
                   <p align="center" style="outline-style: solid;">Graph</p>
 				  <canvas id="ppvChart" width="3"></canvas>
                 </div>
                 <!--/.container bottom left/Graph-->
+
                 <!-- container bottom right/Data -->
                 <div id="box" class="bottom right">
-                  <p align="center" style="outline-style: solid;">Graph Result </p>
-                  <p id="preyP" style="margin-left: 10px;" script="">Prey Population:</p>
-                  <p id="predP" style="margin-left: 10px;">Predator Population:</p>
-                  <p id="vegP" style="margin-left: 10px;">Vegetation Population:</p>
+                  <p align="center" style="outline-style: solid;">Simulation End Result</p>
+                  <p id="Pprey" style="margin-left: 10px;"></p>
+                  <p id="Ppred" style="margin-left: 10px;"></p>
+                  <p id="Pveg" style="margin-left: 10px;"></p>
                 </div>
                 <!--/.container bottom right/Data-->
+
               </div>
               <!-- /.quadrants -->
           </div>
@@ -173,10 +249,11 @@
 
   <!--RT-Graph -->
   <script type="text/javascript" src="graph_index.js"></script>
-  <!--script for RT-Data-->
-  <script>document.getElementById("preyP").innerHTML = "Prey Population: "+prey;</script>
-  <script>document.getElementById("predP").innerHTML = "Predator Population: "+predator;</script>
-  <script>document.getElementById("vegP").innerHTML = "Vegatation Population: "+vegetation;</script>
+
+  <!--RT-Data-->
+  <script>document.getElementById("Pprey").innerHTML = "prey speed: " + prey.speed;</script>
+  <script>document.getElementById("Ppred").innerHTML = "predator: " + pred.name;</script>
+  <script>document.getElementById("Pveg").innerHTML = "Vegatation Population: meh"</script>
 
   <!-- Core plugin JavaScript-->
   <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
